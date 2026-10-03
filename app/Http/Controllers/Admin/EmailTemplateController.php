@@ -61,7 +61,7 @@ class EmailTemplateController extends Controller
         $user = $request->user();
 
         try {
-            Mail::send(TemplatedMail::for($user, $emailTemplate->key, ['action_url' => url('/')]));
+            Mail::send(TemplatedMail::for($user, $emailTemplate->key, array_merge($this->sampleTokens(), ['action_url' => url('/')])));
         } catch (\Throwable $e) {
             Log::error('Email template test send failed: '.$e->getMessage());
 
@@ -75,7 +75,19 @@ class EmailTemplateController extends Controller
     {
         return array_merge(
             TemplatedMail::baseData('Alex Researcher', 'member@example.org'),
+            $this->sampleTokens(),
             ['action_url' => url('/')],
         );
+    }
+
+    /** Example values for the workflow placeholders so previews read naturally. */
+    private function sampleTokens(): array
+    {
+        return [
+            'opportunity' => 'Social Media Coordinator — IEEE Young Professionals',
+            'volunteer' => 'Priya Sharma',
+            'added_by' => 'Jordan Lee',
+            'note' => 'We are delighted to have you on board — expect an intro email this week.',
+        ];
     }
 }

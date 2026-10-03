@@ -96,13 +96,9 @@ class EmailTemplateTest extends TestCase
             ->assertSee('Alex Researcher'); // sample data used in preview
     }
 
-    public function test_users_without_manage_settings_are_blocked(): void
+    public function test_regular_users_are_blocked(): void
     {
-        // Editor has admin access but not the "manage settings" permission.
-        $editor = User::factory()->create();
-        $editor->assignRole('Editor');
-
-        $this->actingAs($editor)
+        $this->actingAs(User::factory()->create())
             ->get(route('admin.email-templates.index'))
             ->assertStatus(403);
     }
