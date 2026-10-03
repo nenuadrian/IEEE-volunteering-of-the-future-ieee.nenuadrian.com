@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    [x-cloak] { display: none !important; }
+    body {
+        @apply bg-cream text-ink font-sans antialiased;
+    }
+    /* Toast auto-dismiss countdown bar (see partials/flash.blade.php) */
+    @keyframes toast-countdown {
+        from { transform: scaleX(1); }
+        to   { transform: scaleX(0); }
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-heading font-semibold tracking-tight text-ink;
+    }
+}
+
+@layer components {
+    .container-x {
+        @apply mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8;
+    }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5
+               font-ui text-sm font-semibold transition focus:outline-none
+               focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    .btn-primary {
+        @apply btn bg-brand text-white shadow-button hover:bg-brand-dark focus:ring-brand;
+    }
+    .btn-secondary {
+        @apply btn border border-brand bg-white text-brand hover:bg-brand-50 focus:ring-brand;
+    }
+    .btn-ghost {
+        @apply btn text-brand hover:bg-brand-50 focus:ring-brand;
+    }
+    .btn-accent {
+        @apply btn bg-accent-blue text-white hover:bg-accent-blue-dark focus:ring-accent-blue;
+    }
+    .btn-danger {
+        @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-600;
+    }
+    .btn-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    .card {
+        @apply rounded-xl border border-light-gray bg-white shadow-card;
+    }
+
+    .chip {
+        @apply inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 font-ui
+               text-xs font-semibold text-brand-700;
+    }
+    .chip-muted {
+        @apply inline-flex items-center gap-1 rounded-full border border-light-gray bg-white px-3 py-1
+               font-ui text-xs font-medium text-warmer-gray;
+    }
+    .chip-blue {
+        @apply inline-flex items-center gap-1 rounded-full bg-accent-blue/10 px-3 py-1 font-ui
+               text-xs font-semibold text-accent-blue;
+    }
+
+    .label {
+        @apply mb-1.5 block font-ui text-sm font-semibold text-warmer-gray;
+    }
+    .help {
+        @apply mt-1 text-xs text-warm-gray;
+    }
+    .input {
+        @apply w-full rounded-md border-light-gray bg-white text-ink shadow-sm
+               focus:border-brand focus:ring-brand;
+    }
+    .checkbox {
+        @apply rounded border-gray-300 text-brand focus:ring-brand;
+    }
+
+    /* Section title with the short orange underline used across volunteer.ieee.org */
+    .section-title {
+        @apply relative pb-3 font-heading text-2xl font-semibold text-ink;
+    }
+    .section-title::after {
+        content: "";
+        @apply absolute bottom-0 left-0 h-0.5 w-16 bg-brand;
+    }
+
+    .stat-value {
+        @apply font-heading text-3xl font-bold text-brand;
+    }
+    .stat-label {
+        @apply mt-1 font-ui text-sm text-warm-gray;
+    }
+
+    .table-head {
+        @apply bg-warm-white font-ui text-xs uppercase tracking-wide text-warm-gray;
+    }
+
+    /* Rendered HTML content (pages, opportunity descriptions, bios) */
+    .content {
+        @apply leading-relaxed text-warmer-gray;
+    }
+    .content > * + * { @apply mt-4; }
+    .content h2 { @apply mt-8 text-2xl text-ink; }
+    .content h3 { @apply mt-6 text-xl text-ink; }
+    .content p { @apply text-warmer-gray; }
+    .content a { @apply text-accent-blue underline underline-offset-2 hover:text-accent-blue-dark; }
+    .content ul { @apply list-disc space-y-1 pl-6; }
+    .content ol { @apply list-decimal space-y-1 pl-6; }
+    .content blockquote { @apply border-l-4 border-brand pl-4 italic text-warm-gray; }
+    .content img { @apply rounded-xl; }
+    .content strong { @apply font-semibold text-ink; }
+    .content h4 { @apply mt-5 text-lg font-semibold text-ink; }
+    .content mark { @apply rounded bg-[#fef08a] px-1; }
+    .content hr { @apply my-8 border-t border-light-gray; }
+    .content figure { @apply my-6; }
+    .content figcaption { @apply mt-2 text-center text-sm text-warm-gray; }
+    .content figure.quote blockquote { @apply mb-0; }
+    .content figure.quote figcaption { @apply mt-2 pl-4 text-left text-sm not-italic text-warm-gray; }
+    .content figure.quote figcaption::before { content: "— "; }
+    .content figure.img-stretched img { @apply w-full; }
+    .content figure.img-bordered img { @apply border border-light-gray; }
+    .content figure.img-bg { @apply rounded-xl bg-warm-white p-4; }
+    .content figure.embed { @apply my-6; }
+    .content figure.embed iframe { @apply w-full rounded-xl; aspect-ratio: 16 / 9; height: auto; border: 0; }
+    .content table { @apply my-4 w-full border-collapse text-left text-base; }
+    .content th, .content td { @apply border border-light-gray px-3 py-2 align-top; }
+    .content th { @apply bg-warm-white font-semibold text-ink; }
+    .content pre { @apply my-4 overflow-x-auto rounded-lg bg-ink p-4 text-sm text-warm-white; }
+    .content pre code { @apply bg-transparent p-0 text-inherit; }
+    .content code { @apply rounded bg-brand-50 px-1.5 py-0.5 font-mono text-[0.9em] text-brand-800; }
+    .content ul.checklist { @apply list-none space-y-1 pl-0; }
+    .content li.task { @apply relative pl-7; }
+    .content li.task::before { content: "\2610"; @apply absolute left-0 text-warm-gray; }
+    .content li.task.done::before { content: "\2611"; @apply text-brand; }
+
+    /* Admin block-editor holder — styled to match .input fields */
+    .editor-holder {
+        @apply min-h-[300px] rounded-md border border-light-gray bg-white py-3 pl-12 pr-4
+               text-ink shadow-sm;
+    }
+}
+
+/* ====================================================================
+   Accessibility
+   User preferences are applied to <html> as classes + a font-scale
+   variable by resources/js/app.js (and a pre-paint script in
+   partials/head). These rules are intentionally plain CSS so they win
+   over utility classes via specificity / !important where needed.
+   ==================================================================== */
+
+:root {
+    --a11y-font-scale: 1;
+}
+
+/* Text-size control: scales the root, so all rem-based type & spacing follow. */
+html {
+    font-size: calc(100% * var(--a11y-font-scale, 1));
+}
+
+/* Skip link — off-screen until focused by the keyboard. */
+.skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 100;
+    transform: translateY(-150%);
+    transition: transform 0.15s ease;
+    border-radius: 0.5rem;
+    background: #e87722;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.skip-link:focus {
+    transform: translateY(0);
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+/* Clearer keyboard focus everywhere. */
+:focus-visible {
+    outline: 3px solid #00629b;
+    outline-offset: 2px;
+}
+
+/* --- High contrast -------------------------------------------------- */
+html.a11y-contrast body {
+    background: #fff;
+    color: #000;
+}
+html.a11y-contrast p,
+html.a11y-contrast li,
+html.a11y-contrast .text-warm-gray,
+html.a11y-contrast .text-warmer-gray,
+html.a11y-contrast .content,
+html.a11y-contrast h1, html.a11y-contrast h2, html.a11y-contrast h3,
+html.a11y-contrast h4, html.a11y-contrast h5, html.a11y-contrast h6 {
+    color: #000 !important;
+}
+html.a11y-contrast a,
+html.a11y-contrast .content a {
+    color: #0a2a66 !important;
+    text-decoration: underline;
+}
+html.a11y-contrast .card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+}
+/* Dark brand surfaces (header/footer/sidebar) → near-black with light text. */
+html.a11y-contrast .bg-charcoal,
+html.a11y-contrast .bg-charcoal-dark,
+html.a11y-contrast .bg-charcoal-light {
+    background-color: #000 !important;
+}
+html.a11y-contrast .bg-charcoal *,
+html.a11y-contrast .bg-charcoal-dark *,
+html.a11y-contrast .bg-charcoal-light * {
+    color: #fff !important;
+    border-color: #fff !important;
+}
+html.a11y-contrast .btn-primary,
+html.a11y-contrast .btn-accent {
+    background: #000 !important;
+    color: #fff !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 0 1px #000 !important;
+}
+html.a11y-contrast .btn-secondary,
+html.a11y-contrast .btn-ghost {
+    background: #fff !important;
+    color: #000 !important;
+    border: 2px solid #000 !important;
+}
+
+/* --- Legible font --------------------------------------------------- */
+html.a11y-legible body,
+html.a11y-legible .content,
+html.a11y-legible .font-heading,
+html.a11y-legible .font-ui,
+html.a11y-legible h1, html.a11y-legible h2, html.a11y-legible h3,
+html.a11y-legible h4, html.a11y-legible h5, html.a11y-legible h6 {
+    font-family: Verdana, Tahoma, "Segoe UI", system-ui, sans-serif !important;
+    letter-spacing: 0.01em;
+}
+
+/* --- Highlight links (skip elements styled as buttons) -------------- */
+html.a11y-links a:not(.btn):not([class*="btn-"]) {
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+    font-weight: 700 !important;
+}
+
+/* --- Readable spacing (WCAG 1.4.12) --------------------------------- */
+html.a11y-spacing p,
+html.a11y-spacing li,
+html.a11y-spacing .content {
+    line-height: 1.8 !important;
+    letter-spacing: 0.12em !important;
+    word-spacing: 0.16em !important;
+}
+html.a11y-spacing .content > * + * {
+    margin-top: 1.5em !important;
+}
+
+/* --- Reduce motion -------------------------------------------------- */
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* --- Large cursor --------------------------------------------------- */
+html.a11y-big-cursor,
+html.a11y-big-cursor * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24'%3E%3Cpath d='M5 2l14 9-6.2 1.1 4 8-3 1.4-4-8L5 19z' fill='%23ffffff' stroke='%23000000' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+}
+
+/* --- Reading guide -------------------------------------------------- */
+#a11y-guide {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2.25rem;
+    margin-top: -1.125rem;
+    pointer-events: none;
+    z-index: 90;
+    display: none;
+    background: rgba(232, 119, 34, 0.08);
+    border-top: 2px solid rgba(232, 119, 34, 0.6);
+    border-bottom: 2px solid rgba(232, 119, 34, 0.6);
+}
+html.a11y-guide #a11y-guide {
+    display: block;
+}
