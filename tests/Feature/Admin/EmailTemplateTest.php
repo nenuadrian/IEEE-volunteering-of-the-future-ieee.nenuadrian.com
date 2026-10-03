@@ -6,7 +6,6 @@ use App\Mail\TemplatedMail;
 use App\Models\EmailTemplate;
 use App\Models\User;
 use Database\Seeders\EmailTemplateSeeder;
-use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -18,16 +17,12 @@ class EmailTemplateTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleAndPermissionSeeder::class);
         $this->seed(EmailTemplateSeeder::class);
     }
 
     private function admin(): User
     {
-        $admin = User::factory()->create();
-        $admin->assignRole('Administrator');
-
-        return $admin;
+        return User::factory()->admin()->create();
     }
 
     public function test_admin_can_view_the_template_list(): void

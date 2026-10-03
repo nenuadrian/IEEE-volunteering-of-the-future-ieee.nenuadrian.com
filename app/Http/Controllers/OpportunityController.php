@@ -97,7 +97,7 @@ class OpportunityController extends Controller
             'opportunity' => $opportunity,
             'application' => $application,
             'canManage' => $canManage,
-            'match' => MatchScore::for($user, $opportunity),
+            'match' => $canManage ? null : MatchScore::for($user, $opportunity),
             'saved' => $user?->hasSaved($opportunity) ?? false,
             'volunteers' => $volunteers,
             'confirmedCount' => $opportunity->confirmedCount(),

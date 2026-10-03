@@ -7,7 +7,7 @@
     <div class="flex flex-1 flex-col p-5">
         <div class="flex items-start justify-between gap-3">
             <span class="text-xs font-semibold uppercase tracking-wide" style="color: {{ $color }}">{{ $opportunity->category?->name ?? 'Opportunity' }}</span>
-            <x-match-badge :match="$match" />
+            <span class="relative z-10"><x-match-badge :match="$match" /></span>
         </div>
         <h3 class="mt-2 line-clamp-2 text-base font-semibold leading-snug text-ink">
             <a href="{{ route('opportunities.show', $opportunity) }}" class="after:absolute after:inset-0 group-hover:text-brand">{{ $opportunity->title }}</a>

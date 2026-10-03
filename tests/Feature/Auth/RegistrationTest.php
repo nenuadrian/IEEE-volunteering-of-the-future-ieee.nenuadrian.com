@@ -18,9 +18,6 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
-        // Registration assigns the default "Member" role, so it must exist.
-        $this->seed(\Database\Seeders\RoleAndPermissionSeeder::class);
-
         $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -29,6 +26,10 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        // New accounts go straight to profile set-up, as regular users with a profile.
+        $response->assertRedirect(route('profile.volunteer.edit', absolute: false));
+        $user = \App\Models\User::where('email', 'test@example.com')->first();
+        $this->assertSame('user', $user->role);
+        $this->assertNotNull($user->profile);
     }
 }

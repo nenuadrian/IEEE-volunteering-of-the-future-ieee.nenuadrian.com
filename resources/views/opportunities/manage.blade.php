@@ -154,7 +154,7 @@
                                 <label class="label" for="note-{{ $a->id }}">Message to {{ $a->user->firstName() }} <span class="font-normal text-warm-gray">(optional, included in the email)</span></label>
                                 <textarea id="note-{{ $a->id }}" name="owner_note" rows="2" class="input" maxlength="2000" :placeholder="decide === 'accepted' ? 'Welcome aboard! Next steps…' : 'Thank you for applying…'"></textarea>
                                 <div class="mt-3 flex gap-2">
-                                    <button class="btn-primary btn-sm" x-text="decide === 'accepted' ? 'Confirm acceptance' : 'Confirm decline'"></button>
+                                    <button class="btn-primary btn-sm"><span x-text="decide === 'accepted' ? 'Confirm acceptance' : 'Confirm decline'">Confirm</span></button>
                                     <button type="button" class="btn-ghost btn-sm" @click="decide = null">Cancel</button>
                                 </div>
                             </form>

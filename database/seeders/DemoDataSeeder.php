@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\HourLog;
 use App\Models\Opportunity;
+use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\User;
 use App\Services\IeeeOpportunitySync;
@@ -168,6 +169,9 @@ class DemoDataSeeder extends Seeder
         $this->savedOpportunities();
         $this->searchLogs(4200);
         $this->flushActivities();
+
+        // Lets `php artisan demo:purge` tell seeded anonymous history from real.
+        Setting::put('demo_seeded_at', now()->toDateTimeString());
 
         $this->command?->info('Demo login: volunteer@'.self::DOMAIN.' / '.(env('DEMO_PASSWORD') ?: (app()->environment('production') ? '(random — set DEMO_PASSWORD)' : 'password')));
     }
