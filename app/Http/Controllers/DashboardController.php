@@ -23,17 +23,13 @@ class DashboardController extends Controller
         $skillIds = $user->skills->pluck('id')->all();
         $appliedIds = $user->applications()->pluck('opportunity_id');
 
-        $recommended = Opportunity::open()
+        $recommended = MatchScore::recommend($user, Opportunity::open()
             ->with(['category', 'skills'])
             ->whereNotIn('id', $appliedIds)
             ->whereDoesntHave('owners', fn ($q) => $q->where('users.id', $user->id))
             ->latest()
-            ->take(80)
-            ->get()
-            ->each(fn ($o) => $o->match = MatchScore::for($user, $o, $skillIds))
-            ->sortByDesc(fn ($o) => $o->match['percent'] * 1000 + $o->created_at->timestamp / 1e7)
-            ->take(4)
-            ->values();
+            ->take(120)
+            ->get(), 4);
 
         $active = $user->applications()
             ->where('status', Application::ACCEPTED)

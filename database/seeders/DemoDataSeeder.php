@@ -921,6 +921,10 @@ class DemoDataSeeder extends Seeder
             "{$first} went above and beyond. Their technical knowledge and calm approach made a real difference, and attendees noticed. I would happily work with them again.",
             "Dependable, thoughtful and well-organised. {$first} handled every request professionally and helped onboard newer volunteers too.",
             "{$first} brought energy and expertise to the team. Their contributions were high quality and always on time — highly recommended for future roles.",
+            "We could not have delivered this without {$first}. They spotted problems early, proposed practical fixes and kept everyone informed.",
+            "{$first} is a natural collaborator: patient with newcomers, generous with knowledge and calm under deadline pressure.",
+            "A thoughtful, detail-oriented volunteer. {$first}'s work raised the quality bar for the whole team and our members noticed the difference.",
+            "{$first} took on more than we asked and still delivered on every commitment. A great ambassador for IEEE volunteering.",
         ]);
     }
 

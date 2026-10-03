@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\Opportunity;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 /**
  * Explainable match between a volunteer and an opportunity.
@@ -61,5 +62,40 @@ class MatchScore
             'location' => $locationOk,
             'reasons' => $reasons,
         ];
+    }
+
+    /**
+     * Pick $limit recommendations: best match first, but at most one per
+     * category on the first pass so the list isn't four variants of one role.
+     *
+     * @param  Collection<int, Opportunity>  $candidates
+     * @return Collection<int, Opportunity>
+     */
+    public static function recommend(User $user, Collection $candidates, int $limit = 4): Collection
+    {
+        $skillIds = $user->skills()->pluck('skills.id')->all();
+
+        $ranked = $candidates
+            ->each(fn (Opportunity $o) => $o->match = static::for($user, $o, $skillIds))
+            ->sortByDesc(fn (Opportunity $o) => $o->match['percent'] * 1e10 + $o->created_at->timestamp)
+            ->values();
+
+        $picked = collect();
+        $seenCategories = [];
+        $seenTitles = [];
+
+        foreach ($ranked as $o) {
+            $stem = mb_strtolower(preg_replace('/[\s,—–-].*$/u', '', $o->title));
+            if (! in_array($o->category_id, $seenCategories, true) && ! in_array($stem, $seenTitles, true)) {
+                $picked->push($o);
+                $seenCategories[] = $o->category_id;
+                $seenTitles[] = $stem;
+            }
+            if ($picked->count() >= $limit) {
+                return $picked;
+            }
+        }
+
+        return $picked->concat($ranked->diff($picked))->take($limit)->values();
     }
 }

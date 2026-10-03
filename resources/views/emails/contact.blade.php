@@ -12,7 +12,7 @@
                 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background:#ffffff; border-radius:14px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08);">
                     <tr>
                         <td style="background:#3a3a3a; padding:24px 32px;">
-                            <p style="margin:0; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#f9c9a0;">Society of RSE</p>
+                            <p style="margin:0; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#f9c9a0;">IEEE Volunteering</p>
                             <h1 style="margin:6px 0 0; font-size:20px; color:#ffffff;">New contact form message</h1>
                         </td>
                     </tr>

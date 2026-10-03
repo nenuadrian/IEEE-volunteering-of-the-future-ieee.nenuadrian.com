@@ -1,3 +1,5 @@
-# Block all crawlers from the entire site.
+# IEEE Volunteering is not indexable: block all crawlers from the entire site.
+# (Pages also send <meta name="robots" content="noindex, nofollow"> and an
+# X-Robots-Tag header, which covers non-HTML responses such as PDF CVs.)
 User-agent: *
 Disallow: /

@@ -1,29 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-ink leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <h1 class="section-title text-3xl">Account settings</h1>
+        <p class="mt-3 text-warm-gray">Your sign-in details. Looking for skills, bio and IEEE details? <a href="{{ route('profile.volunteer.edit') }}" class="font-semibold text-brand hover:underline">Edit your volunteer profile</a>.</p>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+    <div class="container-x max-w-3xl space-y-6 py-8">
+        <div class="card p-6 sm:p-8">
+            @include('profile.partials.update-profile-information-form')
+        </div>
+        <div class="card p-6 sm:p-8">
+            @include('profile.partials.update-password-form')
+        </div>
+        <div class="card p-6 sm:p-8">
+            @include('profile.partials.delete-user-form')
         </div>
     </div>
 </x-app-layout>

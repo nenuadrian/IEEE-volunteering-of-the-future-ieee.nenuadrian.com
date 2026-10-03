@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Application;
 use App\Models\HourLog;
-use App\Models\Opportunity;
 use Illuminate\Http\Request;
 
 /**
@@ -35,7 +34,7 @@ class MyOpportunitiesController extends Controller
             'closed' => $applications->whereIn('status', [Application::REJECTED, Application::WITHDRAWN])->values(),
         ];
 
-        $managing = Opportunity::ownedBy($user)
+        $managing = $user->ownedOpportunities()
             ->with(['category'])
             ->withCount([
                 'applications',
@@ -44,8 +43,8 @@ class MyOpportunitiesController extends Controller
                 'hourLogs as pending_hours_count' => fn ($q) => $q->where('status', HourLog::PENDING),
             ])
             ->withSum(['hourLogs as approved_hours' => fn ($q) => $q->where('status', HourLog::APPROVED)], 'hours')
-            ->orderByRaw("CASE status WHEN 'draft' THEN 0 WHEN 'open' THEN 1 WHEN 'in_progress' THEN 2 WHEN 'on_hold' THEN 3 ELSE 4 END")
-            ->latest()
+            ->orderByRaw("CASE opportunities.status WHEN 'draft' THEN 0 WHEN 'open' THEN 1 WHEN 'in_progress' THEN 2 WHEN 'on_hold' THEN 3 ELSE 4 END")
+            ->latest('opportunities.created_at')
             ->get();
 
         $saved = $user->savedOpportunities()->with(['category', 'skills'])->orderByPivot('created_at', 'desc')->get();

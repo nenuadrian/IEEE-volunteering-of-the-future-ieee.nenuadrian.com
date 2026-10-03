@@ -1,27 +1,37 @@
 @extends('layouts.public')
-@section('title', 'Accessibility statement')
-@section('meta_description', 'Accessibility statement for the Society of Research Software Engineering: our commitment to making society-rse.org accessible in line with WCAG and the Public Sector Bodies Accessibility Regulations 2018.')
+@section('title', 'Accessibility')
+@section('meta_description', 'Accessibility statement for IEEE Volunteering.')
 
 @section('content')
-    <x-page-header
-        eyebrow="Information"
-        title="Accessibility statement"
-        subtitle="Our commitment to making the Society's website usable by everyone.">
-    </x-page-header>
+    <x-page-header title="Accessibility" subtitle="We want everyone in the IEEE community to be able to find and take part in volunteering." />
 
-    <article class="container-x max-w-3xl py-12">
-        <div class="content text-lg">
-            <p>This accessibility statement applies to all pages hosted at society-rse.org.</p>
+    <section class="container-x max-w-4xl py-10">
+        <div class="card content p-8">
+            <h2>Our commitment</h2>
+            <p>IEEE Volunteering aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA. We design with keyboard navigation, screen readers, sufficient colour contrast and responsive layouts in mind, and we test new features against these principles.</p>
 
-            <p>We use accessibility tools to make your device easier to use if you have a disability and to be compliant with the <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG)</a>. We've also made the website text as simple as possible to understand.</p>
+            <h2>Accessibility tools on every page</h2>
+            <p>Use the accessibility button in the bottom-right corner of any page to:</p>
+            <ul>
+                <li>increase or decrease text size,</li>
+                <li>switch to a high-contrast colour scheme,</li>
+                <li>use a more legible font and readable text spacing,</li>
+                <li>highlight links, reduce motion, enlarge the cursor or show a reading guide.</li>
+            </ul>
+            <p>Your choices are remembered on this device.</p>
 
-            <p>You can switch to high-contrast and large-font modes on all pages hosted by the Society. We actively monitor our web pages for empty links, missing alt-text on images and non-descriptive links, and we are working to resolve any broken links we find. We intend to build our pages to be friendly to screen readers.</p>
+            <h2>Charts and data</h2>
+            <p>Every chart on the platform has a “View as table” option with the same numbers, so no information depends on colour or on hovering with a mouse. Chart colours are checked for colour-vision-deficiency safety.</p>
 
-            <p>If you find any problems, or would like the contents provided in a different format such as PDF, please contact us at <a href="mailto:edia@society-rse.org">edia@society-rse.org</a>.</p>
+            <h2>Known limitations</h2>
+            <ul>
+                <li>Opportunity descriptions and images imported from volunteer.ieee.org are shown as provided by their authors and may lack alternative text.</li>
+                <li>The opportunity map uses OpenStreetMap tiles; every opportunity on the map is also available in the list view.</li>
+                <li>PDF CVs are generated automatically and may not be fully tagged for screen readers. The same information is available on each volunteer's profile page.</li>
+            </ul>
 
-            <p>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No.&nbsp;2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint, <a href="https://www.equalityadvisoryservice.com/" target="_blank" rel="noopener">contact the Equality Advisory and Support Service (EASS)</a>.</p>
-
-            <p>The Society of Research Software Engineering is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No.&nbsp;2) Accessibility Regulations 2018.</p>
+            <h2>Feedback</h2>
+            <p>If you find something that is difficult to use, please <a href="{{ route('contact.show') }}">contact us</a> and tell us the page and the problem. We aim to respond within five working days.</p>
         </div>
-    </article>
+    </section>
 @endsection

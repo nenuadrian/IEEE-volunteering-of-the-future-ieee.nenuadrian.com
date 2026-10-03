@@ -2,8 +2,8 @@
 @section('title', 'Contact us')
 
 @section('content')
-    <x-page-header eyebrow="Get in touch" title="Contact us"
-        subtitle="Questions, feedback or ideas for the Society? Send us a message and we’ll get back to you." />
+    <x-page-header title="Contact us &amp; feedback"
+        subtitle="Questions about an opportunity, a problem with the platform, or an idea to make volunteering better? Send us a message." />
 
     <section class="container-x grid gap-10 py-12 lg:grid-cols-3">
         {{-- Form --}}
@@ -57,20 +57,19 @@
         {{-- Aside --}}
         <aside class="space-y-6">
             <div class="card p-6">
-                <h2 class="font-heading text-lg font-bold text-charcoal">Email us directly</h2>
+                <h2 class="text-lg font-semibold text-ink">Email us directly</h2>
                 <p class="mt-2 text-sm text-warmer-gray">Prefer your own mail client? Reach us at:</p>
                 <a href="mailto:{{ $contactEmail }}" class="mt-3 inline-block font-ui text-sm font-semibold text-brand hover:text-brand-dark">
                     {{ $contactEmail }}
                 </a>
             </div>
             <div class="card p-6">
-                <h2 class="font-heading text-lg font-bold text-charcoal">Looking for something else?</h2>
+                <h2 class="text-lg font-semibold text-ink">Looking for something else?</h2>
                 <ul class="mt-3 space-y-2 text-sm">
-                    <li><a href="{{ route('about') }}" class="text-warmer-gray hover:text-brand">About the Society</a></li>
-                    <li><a href="{{ route('team.index') }}" class="text-warmer-gray hover:text-brand">Governance &amp; the team</a></li>
-                    <li><a href="{{ route('resources.index') }}" class="text-warmer-gray hover:text-brand">Resources library</a></li>
-                    <li><a href="{{ route('jobs.index') }}" class="text-warmer-gray hover:text-brand">Jobs board</a></li>
-                    <li><a href="{{ route('register') }}" class="text-warmer-gray hover:text-brand">Join the Society</a></li>
+                    <li><a href="{{ url('/faq') }}" class="text-warmer-gray hover:text-brand">Frequently asked questions</a></li>
+                    <li><a href="{{ url('/how-it-works') }}" class="text-warmer-gray hover:text-brand">How IEEE Volunteering works</a></li>
+                    <li><a href="{{ route('opportunities.index') }}" class="text-warmer-gray hover:text-brand">Browse opportunities</a></li>
+                    <li><a href="{{ route('volunteers.index') }}" class="text-warmer-gray hover:text-brand">Volunteer directory</a></li>
                 </ul>
             </div>
         </aside>

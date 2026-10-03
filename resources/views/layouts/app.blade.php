@@ -2,6 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     @include('partials.head')
+    @stack('head')
 </head>
 <body class="flex min-h-screen flex-col">
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -9,7 +10,7 @@
     @include('partials.header')
 
     @isset($header)
-        <header class="border-b border-light-gray bg-warm-white">
+        <header class="border-b border-light-gray bg-white">
             <div class="container-x py-8">
                 {{ $header }}
             </div>
@@ -25,5 +26,7 @@
     @include('partials.footer')
 
     @include('partials.accessibility')
+
+    @stack('scripts')
 </body>
 </html>

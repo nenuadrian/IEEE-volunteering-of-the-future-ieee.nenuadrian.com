@@ -84,7 +84,7 @@ function buildDatasets(cfg) {
                 borderWidth: 2,
                 borderJoinStyle: 'round',
                 borderCapStyle: 'round',
-                tension: 0.25,
+                cubicInterpolationMode: 'monotone',
                 pointRadius: 0,
                 pointHoverRadius: 5,
                 pointHoverBorderWidth: 2,

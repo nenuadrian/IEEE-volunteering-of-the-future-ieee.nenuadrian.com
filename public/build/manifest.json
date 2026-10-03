@@ -1,0 +1,33 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BG6MDb7x.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-B2lvd6zR.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/charts.js",
+      "resources/js/editor.js"
+    ]
+  },
+  "resources/js/charts.js": {
+    "file": "assets/charts-_Gbl-uA3.js",
+    "name": "charts",
+    "src": "resources/js/charts.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/editor.js": {
+    "file": "assets/editor-BIltGXik.js",
+    "name": "editor",
+    "src": "resources/js/editor.js",
+    "isDynamicEntry": true
+  }
+}

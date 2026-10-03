@@ -57,15 +57,10 @@ class HomeController extends Controller
 
         $recommended = collect();
         if ($user = $request->user()) {
-            $skillIds = $user->skills()->pluck('skills.id')->all();
-            $applied = $user->applications()->pluck('opportunity_id');
-            $recommended = Opportunity::open()->with(['category', 'skills'])
-                ->whereNotIn('id', $applied)
-                ->latest()->take(60)->get()
-                ->each(fn ($o) => $o->match = MatchScore::for($user, $o, $skillIds))
-                ->sortByDesc(fn ($o) => $o->match['percent'])
-                ->take(3)
-                ->values();
+            $recommended = MatchScore::recommend($user, Opportunity::open()->with(['category', 'skills'])
+                ->whereNotIn('id', $user->applications()->pluck('opportunity_id'))
+                ->whereDoesntHave('owners', fn ($q) => $q->where('users.id', $user->id))
+                ->latest()->take(120)->get(), 3);
         }
 
         return view('home', compact('stats', 'featured', 'categories', 'skillsInDemand', 'endorsements', 'recommended'));

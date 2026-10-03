@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,12 @@ class SecurityHeaders
             'camera=(), microphone=(), geolocation=(), browsing-topics=()'
         );
 
+        // Keep the whole site (including PDF CVs) out of search engines unless
+        // an admin explicitly enables indexing in Settings.
+        if (! $this->indexingAllowed()) {
+            $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
+        }
+
         // Only advertise HSTS when actually served over TLS.
         if ($request->isSecure()) {
             $response->headers->set(
@@ -34,5 +41,14 @@ class SecurityHeaders
         }
 
         return $response;
+    }
+
+    private function indexingAllowed(): bool
+    {
+        try {
+            return (bool) Setting::get('search_indexable', false);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 }
