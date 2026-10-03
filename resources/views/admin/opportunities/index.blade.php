@@ -84,7 +84,7 @@
             @endif
         </x-empty-state>
     @else
-        <div class="card overflow-x-auto">
+        <div class="card relative overflow-x-auto">
             <table class="w-full min-w-[1040px] text-left text-sm">
                 <thead class="table-head">
                     <tr>
@@ -137,7 +137,7 @@
                             <td class="px-5 py-4">
                                 @if ($opportunity->isImported())
                                     @if ($opportunity->externalUrl())
-                                        <a href="{{ $opportunity->externalUrl() }}" target="_blank" rel="noopener" class="chip-blue hover:underline" title="Open on volunteer.ieee.org">IEEE ↗</a>
+                                        <a href="{{ $opportunity->externalUrl() }}" target="_blank" rel="noopener" class="chip-blue whitespace-nowrap hover:underline" title="Open on volunteer.ieee.org">IEEE ↗</a>
                                     @else
                                         <span class="chip-blue">IEEE</span>
                                     @endif

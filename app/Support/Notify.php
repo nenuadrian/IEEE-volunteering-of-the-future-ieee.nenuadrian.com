@@ -21,7 +21,10 @@ class Notify
     {
         $opportunity = $application->opportunity;
 
-        foreach ($opportunity->owners as $owner) {
+        // Imported opportunities nobody has claimed yet are reviewed by admins.
+        $recipients = $opportunity->owners->isNotEmpty() ? $opportunity->owners : User::admins()->active()->get();
+
+        foreach ($recipients as $owner) {
             static::send($owner, 'application_received', [
                 'volunteer' => $application->user->name,
                 'opportunity' => $opportunity->title,

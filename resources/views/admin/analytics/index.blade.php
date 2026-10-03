@@ -99,7 +99,7 @@
         <p class="mt-1 text-sm text-warm-gray">People who joined in the period. Each step counts those who also reached every earlier step.</p>
         <div class="mt-4 grid gap-6 lg:grid-cols-5">
             <x-chart class="lg:col-span-3" :config="$charts['funnel']" title="From sign-up to returning volunteer" height="h-72" />
-            <div class="card overflow-x-auto lg:col-span-2">
+            <div class="card relative overflow-x-auto lg:col-span-2">
                 <table class="w-full text-left text-sm">
                     <caption class="sr-only">Engagement funnel steps</caption>
                     <thead class="table-head">
@@ -135,7 +135,7 @@
     <section class="mt-10" aria-labelledby="perf-heading">
         <h2 id="perf-heading" class="font-heading text-lg font-bold text-charcoal">Opportunity performance by type</h2>
         <p class="mt-1 text-sm text-warm-gray">Opportunities published in the period and how their applications went.</p>
-        <div class="card mt-4 overflow-x-auto">
+        <div class="card relative mt-4 overflow-x-auto">
             <table class="w-full min-w-[720px] text-left text-sm">
                 <thead class="table-head">
                     <tr>
@@ -178,7 +178,7 @@
                             <td class="px-5 py-3 text-right tabular-nums">{{ $t['avg_applicants'] ?? '—' }}</td>
                             <td class="px-5 py-3 text-right tabular-nums">{{ $PA::format($t['fill_rate'], 'percent') }}</td>
                             <td class="px-5 py-3 text-right tabular-nums">{{ $PA::format($t['completion_rate'], 'percent') }}</td>
-                            <td class="px-5 py-3 text-right tabular-nums">{{ $t['avg_rating'] ? '★ '.$t['avg_rating'] : '—' }}</td>
+                            <td class="px-5 py-3 text-right tabular-nums">{!! $t['avg_rating'] ? '<span class="text-brand" aria-hidden="true">★</span> '.e($t['avg_rating']) : '—' !!}</td>
                         </tr>
                     </tfoot>
                 @endif
@@ -193,9 +193,9 @@
             <x-chart :config="$charts['regions']"
                      :title="$report['regions']['by'] === 'section' ? 'Active volunteers by section' : 'Active volunteers by region'"
                      :subtitle="$report['regions']['by'] === 'section' ? 'Top sections in '.$analytics->regionLabel() : 'Applied or logged hours in the period'"
-                     height="h-80" />
-            <x-chart :config="$charts['grades']" title="Active volunteers by membership grade" subtitle="Applied or logged hours in the period" height="h-80" />
-            <x-chart :config="$charts['sizes']" title="Opportunities by duration" subtitle="Published in the period, by source" height="h-80" />
+                     height="h-96" />
+            <x-chart :config="$charts['grades']" title="Active volunteers by membership grade" subtitle="Applied or logged hours in the period" height="h-96" />
+            <x-chart class="lg:col-span-2 2xl:col-span-1" :config="$charts['sizes']" title="Opportunities by duration" subtitle="Published in the period, by source" height="h-96" />
         </div>
     </section>
 
@@ -206,7 +206,7 @@
             Demand is the opportunities open right now that ask for the skill; supply is volunteers listing it on their profile.
             Skills with no volunteers, or at least twice the typical demand per volunteer, are flagged as shortages.
         </p>
-        <div class="card mt-4 overflow-x-auto">
+        <div class="card relative mt-4 overflow-x-auto">
             <table class="w-full min-w-[720px] text-left text-sm">
                 <thead class="table-head">
                     <tr>
@@ -264,7 +264,7 @@
         <div class="mt-6 grid gap-6 xl:grid-cols-3">
             <x-chart class="xl:col-span-3" :config="$charts['searches']" title="Searches over time" :subtitle="'All searches and those that found nothing, '.$per" />
 
-            <div class="card overflow-x-auto xl:col-span-2">
+            <div class="card relative overflow-x-auto xl:col-span-2">
                 <h3 class="px-5 pt-4 text-base font-semibold text-ink">Top search terms</h3>
                 <table class="mt-2 w-full text-left text-sm">
                     <thead class="table-head">
@@ -290,7 +290,7 @@
                 </table>
             </div>
 
-            <div class="card overflow-x-auto">
+            <div class="card relative overflow-x-auto">
                 <h3 class="px-5 pt-4 text-base font-semibold text-ink">Searches with no results</h3>
                 <p class="px-5 text-xs text-warm-gray">Content gaps worth filling.</p>
                 <table class="mt-2 w-full text-left text-sm">
@@ -323,7 +323,7 @@
     <section class="mt-10" aria-labelledby="leaders-heading">
         <h2 id="leaders-heading" class="font-heading text-lg font-bold text-charcoal">Leaderboards</h2>
         <div class="mt-4 grid gap-6 lg:grid-cols-3">
-            <div class="card p-5">
+            <div class="card min-w-0 p-5">
                 <h3 class="text-base font-semibold text-ink">Top volunteers by approved hours</h3>
                 <ol class="mt-3 divide-y divide-light-gray">
                     @forelse ($leaders['volunteers'] as $i => $row)
@@ -342,7 +342,7 @@
                 </ol>
             </div>
 
-            <div class="card p-5">
+            <div class="card min-w-0 p-5">
                 <h3 class="text-base font-semibold text-ink">Most applied-to opportunities</h3>
                 <ol class="mt-3 divide-y divide-light-gray">
                     @forelse ($leaders['opportunities'] as $i => $row)
@@ -353,7 +353,7 @@
                                 @if ($o->trashed())
                                     <span class="block truncate text-sm font-medium text-warm-gray">{{ $o->title }} (deleted)</span>
                                 @else
-                                    <a href="{{ route('opportunities.show', $o) }}" class="block truncate text-sm font-medium text-ink hover:text-brand">{{ $o->title }}</a>
+                                    <a href="{{ route('opportunities.show', $o) }}" class="block truncate text-sm font-medium text-ink hover:text-brand" title="{{ $o->title }}">{{ $o->title }}</a>
                                 @endif
                                 <span class="block truncate text-xs text-warm-gray">{{ $o->category?->name ?? 'Uncategorised' }}{{ $o->isImported() ? ' · IEEE import' : '' }}</span>
                             </span>
@@ -368,7 +368,7 @@
                 </ol>
             </div>
 
-            <div class="card p-5">
+            <div class="card min-w-0 p-5">
                 <h3 class="text-base font-semibold text-ink">Most active creators</h3>
                 <ol class="mt-3 divide-y divide-light-gray">
                     @forelse ($leaders['creators'] as $i => $row)
@@ -396,7 +396,7 @@
         <p class="mt-1 text-sm text-warm-gray">
             Monthly sign-up cohorts (last {{ $cohorts['months'] }} months). Each cell is the share of the cohort that applied or logged hours in that month after joining; month 0 is the month they joined.
         </p>
-        <div class="card mt-4 overflow-x-auto p-4">
+        <div class="card relative mt-4 overflow-x-auto p-4">
             <table class="w-full min-w-[640px] border-separate border-spacing-0.5 text-center text-xs">
                 <thead>
                     <tr class="font-ui text-warm-gray">

@@ -20,7 +20,7 @@ return [
         // Run the sync automatically once a day via the scheduler.
         'schedule_daily' => (bool) env('IEEE_VOLUNTEER_SYNC_DAILY', true),
         // Public link to an opportunity on the original platform.
-        'public_opportunity_url' => 'https://volunteer.ieee.org/opportunities/:id',
+        'public_opportunity_url' => 'https://volunteer.ieee.org/opportunities/detail/public/:id',
     ],
 
     'regions' => [

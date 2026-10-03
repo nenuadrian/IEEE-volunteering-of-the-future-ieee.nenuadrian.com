@@ -50,11 +50,11 @@ class PlatformAnalytics
 
     private const SLOT_HOURS = 3;
 
-    private const SLOT_SEARCHES = 4;
+    private const SLOT_APPLICATIONS = 4;
 
     private const SLOT_ACCEPTED = 5;
 
-    private const SLOT_APPLICATIONS = 6;
+    private const SLOT_SEARCHES = 6;
 
     private const SLOT_ZERO_RESULTS = 7;
 
@@ -584,19 +584,29 @@ class PlatformAnalytics
         return ['by' => 'region', 'rows' => $rows];
     }
 
-    /** @return array<string,int> membership grade label => active volunteers */
-    public function volunteersByGrade(): array
+    /**
+     * Active volunteers by membership grade: the eight largest grades, the
+     * rest folded into "Other grades" so every bar keeps a readable label.
+     *
+     * @return array<string,int>
+     */
+    public function volunteersByGrade(int $limit = 8): array
     {
         $labels = config('volunteering.membership_grades');
 
-        return DB::table('profiles')
+        $rows = DB::table('profiles')
             ->whereIn('user_id', $this->activeUsers($this->from, $this->to)->select('users.id'))
             ->selectRaw("COALESCE(membership_grade, '') as grade, COUNT(*) as total")
             ->groupBy('grade')
             ->orderByDesc('total')
             ->get()
-            ->mapWithKeys(fn ($r) => [($labels[$r->grade] ?? ($r->grade ?: 'Not specified')) => (int) $r->total])
-            ->all();
+            ->mapWithKeys(fn ($r) => [($labels[$r->grade] ?? ($r->grade ?: 'Not specified')) => (int) $r->total]);
+
+        if ($rows->count() <= $limit + 1) {
+            return $rows->all();
+        }
+
+        return $rows->take($limit)->put('Other grades', $rows->skip($limit)->sum())->all();
     }
 
     // ----- Skills --------------------------------------------------------

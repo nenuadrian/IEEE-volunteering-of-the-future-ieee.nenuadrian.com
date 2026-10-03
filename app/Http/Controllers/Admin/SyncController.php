@@ -53,7 +53,9 @@ class SyncController extends Controller
     public function show(Request $request, SyncRun $syncRun)
     {
         $syncRun->load('trigger');
-        $entries = collect($syncRun->log ?? [])->filter(fn ($e) => is_array($e));
+        $log = collect($syncRun->log ?? [])->filter(fn ($e) => is_array($e));
+        // Per-opportunity changes vs free-form notes (e.g. the seeder's snapshot import).
+        [$entries, $notes] = $log->partition(fn ($e) => in_array($e['action'] ?? null, self::LOG_ACTIONS, true));
         $action = in_array($request->query('action'), self::LOG_ACTIONS, true) ? $request->query('action') : null;
 
         $local = Opportunity::withTrashed()
@@ -64,6 +66,7 @@ class SyncController extends Controller
         return view('admin.sync.show', [
             'run' => $syncRun,
             'entries' => $action ? $entries->where('action', $action)->values() : $entries->values(),
+            'notes' => $notes->pluck('title')->filter()->values(),
             'actionCounts' => $entries->countBy('action'),
             'action' => $action,
             'local' => $local,

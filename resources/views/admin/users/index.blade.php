@@ -11,7 +11,7 @@
         return [
             'url' => request()->fullUrlWithQuery(['sort' => $key, 'dir' => $next, 'page' => null]),
             'aria' => $active ? ($filters['dir'] === 'asc' ? 'ascending' : 'descending') : 'none',
-            'arrow' => $active ? ($filters['dir'] === 'asc' ? '▲' : '▼') : '↕',
+            'arrow' => $active ? ($filters['dir'] === 'asc' ? '▲' : '▼') : '',
             'active' => $active,
         ];
     };
@@ -88,7 +88,7 @@
             @endif
         </x-empty-state>
     @else
-        <div class="card overflow-x-auto">
+        <div class="card relative overflow-x-auto">
             <table class="w-full min-w-[960px] text-left text-sm">
                 <thead class="table-head">
                     <tr>
@@ -97,7 +97,8 @@
                                 @php($s = $sortable($column['key']))
                                 <th scope="col" class="px-5 py-3 {{ ($column['right'] ?? false) ? 'text-right' : '' }}" aria-sort="{{ $s['aria'] }}">
                                     <a href="{{ $s['url'] }}" @class(['inline-flex items-center gap-1 hover:text-ink', 'text-ink' => $s['active']])>
-                                        {{ $column['label'] }} <span aria-hidden="true" class="text-[10px]">{{ $s['arrow'] }}</span>
+                                        <span class="underline decoration-dotted underline-offset-4">{{ $column['label'] }}</span>
+                                        @if ($s['arrow'])<span aria-hidden="true" class="text-[10px]">{{ $s['arrow'] }}</span>@endif
                                     </a>
                                 </th>
                             @else

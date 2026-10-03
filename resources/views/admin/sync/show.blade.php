@@ -34,6 +34,10 @@
             @endforeach
         </dl>
 
+        @foreach ($notes as $note)
+            <p class="mt-4 rounded-md bg-warm-white px-3 py-2 text-sm text-warmer-gray"><span aria-hidden="true">ℹ</span> {{ $note }}</p>
+        @endforeach
+
         @if ($run->error)
             <div class="mt-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700" role="alert">
                 <p class="font-semibold">The refresh failed</p>
@@ -62,7 +66,7 @@
                 Unchanged opportunities are not listed individually.
             </x-empty-state>
         @else
-            <div class="card mt-4 overflow-x-auto">
+            <div class="card relative mt-4 overflow-x-auto">
                 <table class="w-full min-w-[640px] text-left text-sm">
                     <thead class="table-head">
                         <tr>
@@ -93,7 +97,7 @@
                                 <td class="px-5 py-3 text-right">
                                     @if (! empty($entry['id']))
                                         <a href="{{ str_replace(':id', $entry['id'], config('volunteering.api.public_opportunity_url')) }}" target="_blank" rel="noopener"
-                                           class="font-mono text-xs text-accent-blue hover:underline" title="Open on volunteer.ieee.org">{{ \Illuminate\Support\Str::limit($entry['id'], 14) }} ↗</a>
+                                           class="whitespace-nowrap font-mono text-xs text-accent-blue hover:underline" title="Open on volunteer.ieee.org">{{ \Illuminate\Support\Str::limit($entry['id'], 14) }} ↗</a>
                                     @endif
                                 </td>
                             </tr>

@@ -132,7 +132,7 @@
         @if ($runs->isEmpty())
             <x-empty-state class="mt-4" title="No refreshes yet" icon="⟳">Every refresh — manual or scheduled — will be listed here with what it changed.</x-empty-state>
         @else
-            <div class="card mt-4 overflow-x-auto">
+            <div class="card relative mt-4 overflow-x-auto">
                 <table class="w-full min-w-[860px] text-left text-sm">
                     <thead class="table-head">
                         <tr>
