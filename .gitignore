@@ -1,3 +1,4 @@
+composer.phar
 public/deploy.php
 storage/.composer
 deploy.sh
