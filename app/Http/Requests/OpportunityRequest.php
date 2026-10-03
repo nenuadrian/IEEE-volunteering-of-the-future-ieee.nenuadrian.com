@@ -27,6 +27,22 @@ class OpportunityRequest extends FormRequest
 
     public function rules(): array
     {
+        $rules = $this->fullRules();
+
+        // Drafts only need a title; everything else is checked when publishing.
+        if ($this->input('action') === 'draft') {
+            foreach ($rules as $field => $fieldRules) {
+                if ($field !== 'title') {
+                    $rules[$field] = array_map(fn ($r) => $r === 'required' ? 'nullable' : $r, array_filter($fieldRules, fn ($r) => ! ($r instanceof \Illuminate\Validation\Rules\RequiredIf) && ! (is_string($r) && str_starts_with($r, 'min:') && in_array($field, ['skills', 'description'], true))));
+                }
+            }
+        }
+
+        return $rules;
+    }
+
+    private function fullRules(): array
+    {
         $regions = array_keys(config('volunteering.regions'));
         $grades = array_merge(['_ALL'], array_keys(config('volunteering.membership_grades')));
 
@@ -81,6 +97,9 @@ class OpportunityRequest extends FormRequest
         $data = $this->safe()->except(['skills', 'co_owners', 'thumbnail', 'action']);
 
         $data['membership_grades'] = $data['membership_grades'] ?: null;
+        $data['description'] ??= '';
+        $data['hours_frequency'] ??= 'overall';
+        $data['volunteers_needed'] ??= 1;
         $data['upskills'] = $data['upskills'] ?: null;
 
         return $data;
