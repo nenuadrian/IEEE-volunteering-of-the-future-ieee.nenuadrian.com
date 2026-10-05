@@ -1,4 +1,4 @@
-# IEEE Volunteering — Volunteering of the Future
+# UNOFFICIAL IEEE Volunteering — Volunteering of the Future
 
 A modernised take on [volunteer.ieee.org](https://volunteer.ieee.org): IEEE members find and apply to volunteering opportunities, log their hours, collect endorsements and download a volunteer CV, while anyone can create opportunities (with co-owners) and see the impact of their volunteers. Admins get an analytics suite and tools to manage users, skills, opportunity types and the daily sync with volunteer.ieee.org.
 
@@ -54,7 +54,7 @@ Demo accounts (local only — the password is `password`):
 | Showcase volunteer and organiser | `volunteer@volunteer-demo.test` |
 | ~420 other demo volunteers | `*@volunteer-demo.test` |
 
-## Data: fake history, real from now on
+## Data: fake history
 
 `php artisan migrate --seed` always loads the reference data: opportunity types, the skills taxonomy, pages, menus, email templates and the first admin.
 
